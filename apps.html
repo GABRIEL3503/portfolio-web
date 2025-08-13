@@ -224,6 +224,27 @@
       color: var(--accent);
     }
     .no-scroll { overflow: hidden; }
+main {
+  position: relative; /* importante para que la flecha se posicione dentro */
+}
+
+.back-arrow {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-block;
+}
+
+.back-arrow img {
+  width: 32px; /* ajusta el tamaño a lo que quieras */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.back-arrow img:hover {
+  transform: scale(1.1);
+}
 
   </style>
 </head>
@@ -240,6 +261,9 @@
 
   <!-- Main -->
   <main>
+      <a href="index.html" class="back-arrow">
+    <img src="arrow_back_24dp_3B82F6_FILL0_wght400_GRAD0_opsz24.png" alt="Volver" />
+  </a>
     <!-- Hero -->
     <section class="hero">
       <h1 data-i18n="heroTitle">Aplicaciones hechas a medida</h1>
