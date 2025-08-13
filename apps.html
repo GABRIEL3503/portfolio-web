@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gabriel Apps Portfolio</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1b1c1e;
+      --card: #242529;
+      --text: #f5f5f5;
+      --accent: #3b82f6;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .toggle-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .toggle-lang input {
+      appearance: none;
+      width: 40px;
+      height: 20px;
+      background: var(--card);
+      border-radius: 10px;
+      position: relative;
+      outline: none;
+      transition: background 0.3s;
+    }
+    .toggle-lang input:checked {
+      background: var(--accent);
+    }
+    .toggle-lang input::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      top: 1px;
+      left: 1px;
+      transition: transform 0.3s;
+    }
+    .toggle-lang input:checked::before {
+      transform: translateX(20px);
+    }
+    main {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 0.5rem;
+    }
+    .hero h2 {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 4px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      color: #cfcfcf;
+    }
+    .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 1rem;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    /* Modal */
+/* Modal */
+#modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+}
+#modal.active {
+  display: flex;
+}
+.modal-content {
+  background: var(--card);
+  border-radius: 1rem;
+  max-width: 600px; /* ligeramente más ancho */
+  width: 90%;
+  max-height: 80vh; /* evita que se salga de la pantalla */
+  overflow-y: auto; /* permite scroll interno si hay mucho contenido */
+  padding: 2rem;
+  position: relative;
+  line-height: 1.6; /* altura de línea más cómoda */
+}
+/* Títulos del modal en color de acento */
+.modal-content h3,
+.modal-content h4 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+/* Margen inferior para párrafos y listas */
+.modal-content p {
+  margin-bottom: 1rem;
+}
+.modal-content ul {
+  margin-bottom: 1rem;
+  list-style: none;      /* quitamos las viñetas nativas */
+  padding-left: 0;       /* eliminamos sangría */
+}
+/* Personalización de cada elemento de lista */
+.modal-content ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+/* Añadimos un punto o icono de acento antes de cada elemento */
+.modal-content ul li::before {
+  content: "●";          /* puedes cambiar por un icono Font Awesome si lo tienes cargado */
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-size: 0.5rem;
+}
+/* Botón de cerrar con mayor área clicable */
+.close-modal {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.3s;
+}
+.close-modal:hover {
+  color: var(--accent);
+}
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #777;
+    }
+    a {
+      color: var(--accent);
+    }
+    .no-scroll { overflow: hidden; }
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo" data-i18n="logo">Gabriel Apps</div>
+    <label class="toggle-lang">
+      <span>ES</span>
+      <input type="checkbox" id="langSwitch" aria-label="Cambiar idioma" />
+      <span>EN</span>
+    </label>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <h1 data-i18n="heroTitle">Aplicaciones hechas a medida</h1>
+      <h2 data-i18n="heroSub">Portafolio de proyectos reales</h2>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="grid" id="projectsGrid"><!-- JS injects cards here --></section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Cerrar">&times;</button>
+      <div id="modalBody"><!-- dynamic --></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; <span id="year"></span> Gabriel Medina</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Translations
+ const translations = {
+  es: {
+    logo: "Gabriel Apps",
+    heroTitle: "Aplicaciones hechas a medida",
+    heroSub: "Portafolio de proyectos reales",
+    btnMore: "Ver más",
+    btnVisit: "Visitar",
+    techTitle: "Stack tecnológico",
+    // 👇 NUEVO
+    visitChooserTitle: "¿A dónde querés ir?",
+  },
+  en: {
+    logo: "Gabriel Apps",
+    heroTitle: "Tailored web applications",
+    heroSub: "Real-world project portfolio",
+    btnMore: "Details",
+    btnVisit: "Visit",
+    techTitle: "Tech stack",
+    // 👇 NUEVO
+    visitChooserTitle: "Where do you want to go?",
+  },
+};
+
+    // Projects
+    const projects = [
+        {
+  name: {
+    es: "Gestor Inventario & Ventas",
+    en: "Inventory & Sales Manager",
+  },
+  desc: {
+    es: "Gestión integral de inventario y ventas en tiempo real.",
+    en: "Real-time inventory and sales management.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript", "Node",
+    "Express", "MySQL", "JWT",
+    "html2canvas", "jsPDF"
+  ],
+  features: {
+    es: [
+     "Diseño Responsivo y Accesible",
+      "Inicio de sesión seguro (JWT)",
+      "Alta de productos con autocompletado inteligente",
+      "Búsqueda y filtros avanzados por ID, estado, fechas, precio y atributos",
+      "Edición masiva de precios sobre resultados filtrados",
+      "Registro de ventas con múltiples medios de pago y recargos/descuentos",
+      "Pagos con tarjeta en cuotas (coeficiente financiero editable)",
+      "Estadísticas mensuales de ventas (ítems/top colores, medios de pago, ganancia)",
+      "Exportación de reportes a PDF"
+    ],
+    en: [
+      "Responsive and accessible design",
+      "Secure login (JWT)",
+      "Product creation with smart autocompletion",
+      "Advanced search & filters by ID, status, date, price and attributes",
+      "Bulk price update for filtered results",
+      "Sales logging with multiple payment methods and surcharges/discounts",
+      "Credit-card payments with installments  (editable coefficient)",
+      "Monthly stats (top items/colors, payment method, profit) with navigation",
+      "PDF report export"
+    ],
+  },
+  url: "https://octopus-app.com.ar/inventario-aniceta/",
+}
+,
+{
+  name: {
+    es: "Fidelización de Clientes",
+    en: "Customer Loyalty Platform",
+  },
+  desc: {
+    es: "Plataforma de fidelización de clientes desarrollada a medida para Cine Rex.",
+    en: "Custom-built customer loyalty platform for Cine Rex.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "Animate.css", "SweetAlert2", "Toastify",
+    "Fetch API", "Backend API (Node + Express + MySQL)"
+  ],
+  features: {
+    es: [
+      "Registro de clientes en 4 pasos con validaciones y prevención de duplicados",
+      "Interfaz interactiva con animaciones y sonidos para mejorar la experiencia",
+      "Integración directa con WhatsApp para agendar clientes",
+      "Gestión de campañas de beneficios con asignación y fechas activas",
+      "Avisos de cumpleaños de la comunidad en tiempo real",
+      "Acceso simple a base de datos de clientes con búsqueda por DNI",
+      "Cambio de estado optimista (pendiente, agendado, notificado, canjeado)",
+      "Control de ingresos por cliente con actualizaciones en tiempo real"
+    ],
+    en: [
+      "4-step customer registration with validations and duplicate prevention",
+      "Interactive interface with animations and sounds for enhanced UX",
+      "Direct WhatsApp integration for customer scheduling",
+      "Benefit campaign management with customer assignment and active date ranges",
+      "Real-time community birthday alerts",
+      "Simple database access with DNI search",
+      "Optimistic state change (pending, scheduled, notified, redeemed)",
+      "Per-customer income tracking with real-time updates"
+    ],
+  },
+  url: "https://comunidad-rex-cutralco.com.ar/",
+visitOptions: [
+        {
+          label: { es: "Formulario de usuarios", en: "User form" },
+          url: "https://comunidad-rex-cutralco.com.ar/#formulario",
+        },
+        {
+          label: { es: "Panel de administrador", en: "Admin panel" },
+          url: "https://comunidad-rex-cutralco.com.ar/datos",
+        },
+      ],
+    },
+     {
+  name: {
+    es: "Catálogo & Pedidos Online",
+    en: "Online Catalog & Orders",
+  },
+  desc: {
+    es: "Menú con carrito, pagos Mercado Pago y panel admin en vivo.",
+    en: "Menu with cart, Mercado Pago checkout & live admin panel.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "SweetAlert2", "Toastify", "Sortable.js",
+    "MercadoPago SDK", "Node", "Express", "MySQL", "JWT"
+  ],
+  features: {
+    es: [
+      "Login seguro (JWT) con vista según rol",
+      "Catálogo cacheado 1 h y agrupado por comidas/bebidas",
+      "Carrito dinámico con cálculo de envío y total",
+      "Checkout integrado con Mercado Pago",
+      "Confirmación automática vía WhatsApp",
+      "Edición de stock, precios e imágenes (WebP) en admin",
+      "Reordenar menú drag-and-drop (Sortable.js)",
+      "Panel de pedidos en tiempo real con cambio de estado"
+    ],
+    en: [
+      "Secure login (JWT) with role-based view",
+      "Catalog cached 1 h and grouped by food/drinks",
+      "Dynamic cart with shipping & total calculation",
+      "Integrated Mercado Pago checkout",
+      "Automatic confirmation via WhatsApp",
+      "Admin stock, price & image (WebP) editing",
+      "Menu re-ordering via drag-and-drop (Sortable.js)",
+      "Real-time orders panel with status update"
+    ],
+  },
+  url: "https://octopus-app.com.ar/inventario-aniceta/",
+}
+,{
+  name: {
+    es: "Chatbots IA en Tiempo Real",
+    en: "Real-Time AI Chatbots",
+  },
+  desc: {
+    es: "Asistentes virtuales conectados a base de datos para responder y gestionar datos automáticamente.",
+    en: "Virtual assistants connected to databases to respond and manage data automatically.",
+  },
+  stack: [
+    "JavaScript", "n8n", "Make (Integromat)", "MySQL", "OpenAI API", "Node.js", "Express"
+  ],
+  features: {
+    es: [
+      "Respuestas automáticas con lenguaje natural usando IA (OpenAI)",
+      "Integración en tiempo real con base de datos MySQL",
+      "Flujos automatizados con n8n y Make",
+      "Procesamiento de datos y validaciones antes de responder",
+      "Soporte multicanal (web, WhatsApp, redes sociales)",
+      "Conexión segura con API REST personalizada"
+    ],
+    en: [
+      "Automated natural language responses using AI (OpenAI)",
+      "Real-time integration with MySQL database",
+      "Automated workflows via n8n and Make",
+      "Data processing and validations before replying",
+      "Multi-channel support (web, WhatsApp, social media)",
+      "Secure connection with custom REST API"
+    ],
+
+  }
+  
+}
+,
+{
+  name: {
+    es: "Carta Digital",
+    en: "Digital Menu",
+  },
+  desc: {
+    es: "Gestión de carta digital con organización flexible, drag‑and‑drop y optimización de imágenes para bares y restaurantes.",
+    en: "Digital menu management with flexible organisation, drag‑and‑drop and image optimisation for bars and restaurants.",
+  },
+  stack: [
+    "HTML5", "CSS3", "JavaScript (ES6+)",
+    "SweetAlert2", "SortableJS", "Toastify.js", "AOS",
+    "Node.js", "Express", "SQLite",
+    "Multer", "Sharp", "JWT",
+    "LocalStorage", "Fetch API"
+  ],
+  features: {
+    es: [
+      "Gestionar productos: crear, editar, eliminar y marcar subelementos (porciones, extras, etc.)",
+      "Organizar grupos y categorías con drag‑and‑drop y persistir el orden en la base de datos",
+      "Mostrar u ocultar ítems con cambio visual y visibilidad solo para administradores autenticados",
+      "Gestión avanzada de stock con edición/eliminación de combinaciones desde el popup de edición",
+      "Carga de imágenes comprimidas a WebP y redimensionadas automáticamente",
+      "Interfaz segura: botones de administración visibles solo para usuarios autenticados (JWT en localStorage)",
+      "Experiencia mejorada: auto‑scroll a la última categoría creada, lazy load de imágenes, animaciones AOS"
+    ],
+    en: [
+      "Manage items: create, edit, delete and mark sub‑items (portions, extras, etc.)",
+      "Organise groups and categories with drag‑and‑drop, persisting the order in the database",
+      "Show/hide items with visual feedback and visibility only for authenticated admins",
+      "Advanced stock management: edit/remove combinations directly in the edit popup",
+      "Upload images automatically compressed to WebP and resized",
+      "Secure interface: admin buttons visible only to authenticated users (JWT in localStorage)",
+      "Enhanced UX: auto‑scroll to the last created category, lazy loading of images, AOS animations"
+    ],
+  },
+  url: "https://elpatio427.com.ar/"
+}
+,{
+  name: {
+    es: "Generador de Vouchers",
+    en: "Digital Voucher Generator",
+  },
+  desc: {
+    es: "Crea cupones con QR, compártelos y valida canjes de forma segura.",
+    en: "Create QR vouchers, share them and validate redemptions securely.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "SweetAlert2", "QRCode.js",
+    "html2canvas", "Web Share API",
+    "Express", "JWT"
+  ],
+  features: {
+    es: [
+      "Login seguro (JWT) vía modal SweetAlert2",
+      "Creación de voucher con QR y metadatos personalizables",
+      "Diseño previo editable antes de confirmar",
+      "Compartir por Web Share API y descarga PNG",
+      "Historial completo de cupones emitidos",
+      "Página pública con QR y acceso a WhatsApp",
+      "Validación/canje con estado vigente o expirado"
+    ],
+    en: [
+      "Secure login (JWT) via SweetAlert2 modal",
+      "Voucher creation with QR and customizable metadata",
+      "Editable preview before confirmation",
+      "Share via Web Share API and PNG download",
+      "Full history of issued vouchers",
+      "Public page with QR and WhatsApp shortcut",
+      "Validation/redeem with active or expired status"
+    ],
+  },
+  url: "https://vauchers2-0.onrender.com",
+},
+{
+  name: {
+    es: "Inventario de Cocina",
+    en: "Kitchen Inventory",
+  },
+  desc: {
+    es: "Control de inventario de cocina con alertas y estadísticas históricas.",
+    en: "Kitchen inventory control with alerts and historical stats.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "Express", "MySQL", "Node"
+  ],
+  features: {
+    es: [
+      "Alta, edición y eliminación de productos vía modal",
+      "Control de stock con actualización en tiempo real",
+      "Alertas visuales y orden prioritario para bajo stock",
+      "Historial y desglose por intervalos de 30 minutos",
+      "Búsqueda rápida con scroll y resaltado temporal",
+      "Confirmación antes de eliminar productos",
+      "Estadísticas mensuales hasta 6 meses previos"
+    ],
+    en: [
+      "Add, edit and delete products via modal",
+      "Real-time stock control and updates",
+      "Visual alerts and priority ordering for low stock",
+      "History and breakdown by 30-minute intervals",
+      "Quick search with smooth scroll and temporary highlight",
+      "Delete confirmation popups",
+      "Monthly stats up to 6 months back"
+    ],
+  },
+  url: "https://octopus-app.com.ar/inventario-cocina",
+}
+,{
+  name: {
+    es: "Gestión de Turnos & Calendario",
+    en: "Scheduling & Calendar System",
+  },
+  desc: {
+    es: "Reservas online, bloqueo de franjas, estados de trabajo y contacto directo.",
+    en: "Online bookings, slot blocking, work statuses and direct client contact.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "FullCalendar (core/dayGrid/interaction/es)",
+    "Nunito Sans", "Express"
+  ],
+  features: {
+    es: [
+      "Login de operarios; guarda operario_id en sessionStorage",
+      "Formulario de reservas con validación y horarios disponibles",
+      "Calendario FullCalendar con turnos y bloqueos (vista mensual)",
+      "Estados: Confirmar · En camino · Realizado + notificación por WhatsApp",
+      "Bloqueo/desbloqueo de franjas desde el calendario",
+      "Disponibilidad dinámica consultada al backend antes de reservar",
+      "Indicadores por color: bloqueado, pendiente, asignado, confirmado, realizado"
+    ],
+    en: [
+      "Worker login; stores operario_id in sessionStorage",
+      "Booking form with validation and available time slots",
+      "FullCalendar with appointments and blocks (month view)",
+      "Statuses: Confirmed · On the way · Completed + WhatsApp notification",
+      "Block/unblock time slots from the calendar",
+      "Dynamic availability fetched from backend before booking",
+      "Color-coded statuses: blocked, pending, assigned, confirmed, completed"
+    ],
+  },
+  url: "https://octopus-app.com.ar/seguimiento-demo/reserva",
+}
+,
+{
+  name: {
+    es: "Agenda & Servicios",
+    en: "Scheduling & Services",
+  },
+  desc: {
+    es: "Agenda por días, precios en vivo y novedades con imágenes. Panel admin protegido.",
+    en: "Day-by-day agenda, live pricing and image news. Password-protected admin panel.",
+  },
+  stack: [
+    "HTML", "CSS", "JavaScript",
+    "Swiper.js", "SweetAlert2", "AOS",
+    "Fetch API", "Nunito Sans", "Express"
+  ],
+  features: {
+    es: [
+      "Agenda deslizable (Swiper.js) con días y horarios cargados dinámicamente",
+      "Actualización de precios en vivo (solo admin) con guardado inmediato vía API",
+      "Novedades con imagen: alta/edición/borrado y 'Ver más' con inscripción por WhatsApp",
+      "Autenticación admin con persistencia en localStorage y alternancia visitante/admin",
+      "UX: SweetAlert2 para popups, loader inicial y animaciones AOS",
+      "Botón rápido de WhatsApp para inscripciones"
+    ],
+    en: [
+      "Swipeable agenda (Swiper.js) with dynamically loaded days/time slots",
+      "Live price editing (admins only) with immediate API save",
+      "News with image: create/edit/delete and 'Read more' linking to WhatsApp sign-up",
+      "Admin auth with localStorage persistence; visitor/admin UI toggle",
+      "UX: SweetAlert2 popups, initial loader and AOS animations",
+      "Quick WhatsApp button for sign-ups"
+    ],
+  },
+  url: "https://octopus-app.com.ar/ayun",
+}
+
+    ];
+
+    // Select language
+    let lang = localStorage.getItem("lang") || "es";
+    document.getElementById("langSwitch").checked = lang === "en";
+
+    // Apply translations to static elements and render projects
+    function applyTranslations() {
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        el.textContent = translations[lang][key];
+      });
+      renderProjects();
+    }
+
+    // Render project cards
+    function renderProjects() {
+      const grid = document.getElementById("projectsGrid");
+      grid.innerHTML = "";
+      projects.forEach((p, i) => {
+        const card = document.createElement("article");
+        card.className = "card";
+     card.innerHTML = `
+  <h3>${p.name[lang]}</h3>
+  <p>${p.desc[lang]}</p>
+  <div class="actions">
+    <button class="btn btn-primary" data-index="${i}" data-action="details">
+      ${translations[lang].btnMore}
+    </button>
+    <!-- 👇 Agregar data-action y data-index -->
+    <a class="btn btn-outline"
+       href="${p.url}" target="_blank" rel="noopener"
+       data-action="visit" data-index="${i}">
+       ${translations[lang].btnVisit}
+    </a>
+  </div>
+`;
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Modal handlers
+ function openModal(html) {
+  const modalBody = document.getElementById("modalBody");
+  modalBody.innerHTML = html;
+  document.getElementById("modal").classList.add("active");
+  document.body.classList.add("no-scroll"); // 👈
+}
+function closeModal() {
+  document.getElementById("modal").classList.remove("active");
+  document.body.classList.remove("no-scroll"); // 👈
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && document.getElementById("modal").classList.contains("active")) {
+    closeModal();
+  }
+});
+
+  // Details modal (como ya lo tenías)
+  function openDetails(i) {
+    const p = projects[i];
+    openModal(`
+      <h3>${p.name[lang]}</h3>
+      <p>${p.desc[lang]}</p>
+      <h4>${translations[lang].techTitle}</h4>
+      <p>${p.stack.join(", ")}</p>
+      <ul>${p.features[lang].map((f) => `<li>${f}</li>`).join("")}</ul>
+      <a class="btn btn-primary" href="${p.url}" target="_blank" rel="noopener">
+        ${translations[lang].btnVisit}
+      </a>
+    `);
+  }
+
+  // 👇👇 NUEVO: modal “dos botones” para visitar
+// Modal “dos botones” sin Cancelar (se cierra con la X o clic en el fondo)
+function openVisitChooser(i) {
+  const p = projects[i];
+  if (!p.visitOptions || p.visitOptions.length === 0) return;
+
+  const optionsHTML = p.visitOptions
+    .map((opt, idx) => `
+      <a class="btn ${idx === 0 ? "btn-primary" : "btn-outline"}"
+         href="${opt.url}" target="_blank" rel="noopener">
+        ${opt.label[lang]}
+      </a>
+    `)
+    .join("");
+
+  openModal(`
+    <h3 style="margin-bottom:.5rem;">${translations[lang].visitChooserTitle}</h3>
+    <p style="margin-bottom:1rem;"><strong>${p.name[lang]}</strong></p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">${optionsHTML}</div>
+  `);
+}
+
+  // Click events
+  document.addEventListener("click", (e) => {
+    // Cerrar modal (X o click fondo)
+    if (e.target.closest(".close-modal") || e.target.id === "modal") {
+      closeModal();
+      return;
+    }
+
+    // Detalles
+    if (e.target.matches('[data-action="details"]')) {
+      openDetails(e.target.dataset.index);
+      return;
+    }
+
+    // Visitar (interceptar solo si hay visitOptions)
+    const visitLink = e.target.closest('[data-action="visit"]');
+    if (visitLink) {
+      const i = visitLink.dataset.index;
+      const p = projects[i];
+      if (p?.visitOptions?.length >= 2) {
+        e.preventDefault(); // no vamos directo, mostramos el pop-up
+        openVisitChooser(i);
+      }
+    }
+  });
+    // Language switch
+    document.getElementById("langSwitch").addEventListener("change", (e) => {
+      lang = e.target.checked ? "en" : "es";
+      localStorage.setItem("lang", lang);
+      applyTranslations();
+    });
+
+    // Init
+    document.getElementById("year").textContent = new Date().getFullYear();
+    applyTranslations();
+  </script>
+</body>
+</html>
