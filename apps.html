@@ -441,40 +441,46 @@ visitOptions: [
     ],
   },
   url: "https://octopus-app.com.ar/brillitos/",
-}
-,{
+},
+{
   name: {
-    es: "Chatbots IA en Tiempo Real",
-    en: "Real-Time AI Chatbots",
+    es: "Chatbot IA para Cartelera de Cine (Tiempo Real)",
+    en: "Real-Time Cinema Listings AI Chatbot"
   },
   desc: {
-    es: "Asistentes virtuales conectados a base de datos para responder y gestionar datos automáticamente.",
-    en: "Virtual assistants connected to databases to respond and manage data automatically.",
+    es: "Asistente virtual que administra y responde sobre cartelera de cine (películas, funciones, combos y horarios de boletería) consultando la base de datos en tiempo real.",
+    en: "Virtual assistant that manages and answers about cinema listings (movies, showtimes, combos, and box office hours) by querying the database in real time."
   },
   stack: [
-    "JavaScript", "n8n", "Make (Integromat)", "MySQL", "OpenAI API", "Node.js", "Express"
+    "React", "Vite", "TailwindCSS", // UI del panel
+    "JavaScript",
+    "Node.js", "Express",           // API REST
+    "SQLite (dev) / MySQL (prod)",  // Base de datos
+    "OpenAI API", "n8n",            // Agente y orquestación
+    "WhatsApp (Business API)", "REST Webhooks"
   ],
   features: {
     es: [
-      "Respuestas automáticas con lenguaje natural usando IA (OpenAI)",
-      "Integración en tiempo real con base de datos MySQL",
-      "Flujos automatizados con n8n y Make",
-      "Procesamiento de datos y validaciones antes de responder",
-      "Soporte multicanal (web, WhatsApp, redes sociales)",
-      "Conexión segura con API REST personalizada"
+      "Panel de administración para Películas: título, sinopsis, ATP, trailer_url, poster_url, flags (2x1/activa).",
+      "Gestión de Funciones: película, fecha, múltiples horarios, formato (2D/3D), precio opcional y promo 2x1.",
+      "Gestión de Combos con ítems (producto + cantidad) y precio total.",
+      "Horarios de Boletería por día con opción de marcar cerrado (null).",
+      "Respuestas del chatbot en tiempo real (n8n + OpenAI) leyendo la BD: próximas funciones, precios, promos 2x1, combos y horarios.",
+      "Validaciones simples en el panel y procesamiento antes de persistir (front) + API REST segura para el bot."
     ],
     en: [
-      "Automated natural language responses using AI (OpenAI)",
-      "Real-time integration with MySQL database",
-      "Automated workflows via n8n and Make",
-      "Data processing and validations before replying",
-      "Multi-channel support (web, WhatsApp, social media)",
-      "Secure connection with custom REST API"
-    ],
+      "Admin panel for Movies: title, synopsis, ATP rating, trailer_url, poster_url, flags (2x1/active).",
+      "Showtime management: movie, date, multiple times, format (2D/3D), optional price and 2x1 promo.",
+      "Combos management with items (product + quantity) and total price.",
+      "Box office hours per weekday with 'closed' option (null).",
+      "Real-time chatbot answers (n8n + OpenAI) by reading the DB: upcoming showtimes, prices, 2x1 promos, combos and hours.",
+      "Lightweight front validations and pre-processing + secure REST API for the bot."
+    ]
+  },
+    url: "https://octopus-app.com.ar/chat-rex/"
 
-  }
-  
 }
+
 ,
 {
   name: {
