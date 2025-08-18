@@ -247,6 +247,10 @@ main {
 }
 
   </style>
+  <!-- AOS Animation -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 </head>
 <body>
   <!-- Header -->
@@ -392,7 +396,6 @@ main {
       "Per-customer income tracking with real-time updates"
     ],
   },
-  url: "https://octopus-app.com.ar/comunidad-rex/",
 visitOptions: [
         {
           label: { es: "Formulario de usuarios", en: "User form" },
@@ -626,7 +629,17 @@ visitOptions: [
       "Color-coded statuses: blocked, pending, assigned, confirmed, completed"
     ],
   },
-  url: "https://octopus-app.com.ar/seguimiento-demo/reserva",
+visitOptions: [
+  {
+    label: { es: "Formulario de reserva", en: "Booking form" },
+    url: "https://octopus-app.com.ar/seguimiento-demo/reserva",
+  },
+  {
+    label: { es: "Panel de administrador", en: "Admin panel" },
+    url: "https://octopus-app.com.ar/seguimiento-demo/admin.html",
+  },
+],
+
 }
 ,
 {
@@ -686,6 +699,8 @@ visitOptions: [
       projects.forEach((p, i) => {
         const card = document.createElement("article");
         card.className = "card";
+        card.setAttribute("data-aos", "fade-up"); // 👈 esta línea
+
      card.innerHTML = `
   <h3>${p.name[lang]}</h3>
   <p>${p.desc[lang]}</p>
@@ -732,9 +747,7 @@ document.addEventListener("keydown", (e) => {
       <h4>${translations[lang].techTitle}</h4>
       <p>${p.stack.join(", ")}</p>
       <ul>${p.features[lang].map((f) => `<li>${f}</li>`).join("")}</ul>
-      <a class="btn btn-primary" href="${p.url}" target="_blank" rel="noopener">
-        ${translations[lang].btnVisit}
-      </a>
+     
     `);
   }
 
@@ -795,6 +808,11 @@ function openVisitChooser(i) {
     // Init
     document.getElementById("year").textContent = new Date().getFullYear();
     applyTranslations();
+    AOS.init({
+  duration: 800,
+  once: true,
+});
+
   </script>
 </body>
 </html>
