@@ -362,6 +362,46 @@ main {
 ,
 {
   name: {
+    es: "Chatbot IA para Cartelera de Cine (Tiempo Real)",
+    en: "Real-Time Cinema Listings AI Chatbot"
+  },
+  desc: {
+    es: "Asistente virtual que administra y responde sobre cartelera de cine (películas, funciones, combos y horarios de boletería) consultando la base de datos en tiempo real.",
+    en: "Virtual assistant that manages and answers about cinema listings (movies, showtimes, combos, and box office hours) by querying the database in real time."
+  },
+  stack: [
+    "React", "Vite", "TailwindCSS", // UI del panel
+    "JavaScript",
+    "Node.js", "Express",           // API REST
+    "SQLite (dev) / MySQL (prod)",  // Base de datos
+    "OpenAI API", "n8n",            // Agente y orquestación
+    "WhatsApp (Business API)", "REST Webhooks"
+  ],
+  features: {
+    es: [
+      "Panel de administración para Películas: título, sinopsis, ATP, trailer_url, poster_url, flags (2x1/activa).",
+      "Gestión de Funciones: película, fecha, múltiples horarios, formato (2D/3D), precio opcional y promo 2x1.",
+      "Gestión de Combos con ítems (producto + cantidad) y precio total.",
+      "Horarios de Boletería por día con opción de marcar cerrado (null).",
+      "Respuestas del chatbot en tiempo real (n8n + OpenAI) leyendo la BD: próximas funciones, precios, promos 2x1, combos y horarios.",
+      "Validaciones simples en el panel y procesamiento antes de persistir (front) + API REST segura para el bot."
+    ],
+    en: [
+      "Admin panel for Movies: title, synopsis, ATP rating, trailer_url, poster_url, flags (2x1/active).",
+      "Showtime management: movie, date, multiple times, format (2D/3D), optional price and 2x1 promo.",
+      "Combos management with items (product + quantity) and total price.",
+      "Box office hours per weekday with 'closed' option (null).",
+      "Real-time chatbot answers (n8n + OpenAI) by reading the DB: upcoming showtimes, prices, 2x1 promos, combos and hours.",
+      "Lightweight front validations and pre-processing + secure REST API for the bot."
+    ]
+  },
+    url: "https://octopus-app.com.ar/chat-rex/"
+
+}
+
+,
+{
+  name: {
     es: "Fidelización de Clientes",
     en: "Customer Loyalty Platform",
   },
@@ -443,56 +483,22 @@ visitOptions: [
       "Real-time orders panel with status update"
     ],
   },
+  note: {
+    es: "Diseñada para uso en móviles (sin versión responsiva para escritorio).",
+    en: "Designed for mobile use (no responsive desktop version)."
+  },
   url: "https://octopus-app.com.ar/brillitos/",
 },
-{
-  name: {
-    es: "Chatbot IA para Cartelera de Cine (Tiempo Real)",
-    en: "Real-Time Cinema Listings AI Chatbot"
-  },
-  desc: {
-    es: "Asistente virtual que administra y responde sobre cartelera de cine (películas, funciones, combos y horarios de boletería) consultando la base de datos en tiempo real.",
-    en: "Virtual assistant that manages and answers about cinema listings (movies, showtimes, combos, and box office hours) by querying the database in real time."
-  },
-  stack: [
-    "React", "Vite", "TailwindCSS", // UI del panel
-    "JavaScript",
-    "Node.js", "Express",           // API REST
-    "SQLite (dev) / MySQL (prod)",  // Base de datos
-    "OpenAI API", "n8n",            // Agente y orquestación
-    "WhatsApp (Business API)", "REST Webhooks"
-  ],
-  features: {
-    es: [
-      "Panel de administración para Películas: título, sinopsis, ATP, trailer_url, poster_url, flags (2x1/activa).",
-      "Gestión de Funciones: película, fecha, múltiples horarios, formato (2D/3D), precio opcional y promo 2x1.",
-      "Gestión de Combos con ítems (producto + cantidad) y precio total.",
-      "Horarios de Boletería por día con opción de marcar cerrado (null).",
-      "Respuestas del chatbot en tiempo real (n8n + OpenAI) leyendo la BD: próximas funciones, precios, promos 2x1, combos y horarios.",
-      "Validaciones simples en el panel y procesamiento antes de persistir (front) + API REST segura para el bot."
-    ],
-    en: [
-      "Admin panel for Movies: title, synopsis, ATP rating, trailer_url, poster_url, flags (2x1/active).",
-      "Showtime management: movie, date, multiple times, format (2D/3D), optional price and 2x1 promo.",
-      "Combos management with items (product + quantity) and total price.",
-      "Box office hours per weekday with 'closed' option (null).",
-      "Real-time chatbot answers (n8n + OpenAI) by reading the DB: upcoming showtimes, prices, 2x1 promos, combos and hours.",
-      "Lightweight front validations and pre-processing + secure REST API for the bot."
-    ]
-  },
-    url: "https://octopus-app.com.ar/chat-rex/"
 
-}
 
-,
 {
   name: {
     es: "Carta Digital",
     en: "Digital Menu",
   },
   desc: {
-    es: "Gestión de carta digital con organización flexible, drag‑and‑drop y optimización de imágenes para bares y restaurantes.",
-    en: "Digital menu management with flexible organisation, drag‑and‑drop and image optimisation for bars and restaurants.",
+    es: "Gestión de carta digital con organización flexible, drag-and-drop y optimización de imágenes para bares y restaurantes.",
+    en: "Digital menu management with flexible organisation, drag-and-drop and image optimisation for bars and restaurants.",
   },
   stack: [
     "HTML5", "CSS3", "JavaScript (ES6+)",
@@ -504,25 +510,30 @@ visitOptions: [
   features: {
     es: [
       "Gestionar productos: crear, editar, eliminar y marcar subelementos (porciones, extras, etc.)",
-      "Organizar grupos y categorías con drag‑and‑drop y persistir el orden en la base de datos",
+      "Organizar grupos y categorías con drag-and-drop y persistir el orden en la base de datos",
       "Mostrar u ocultar ítems con cambio visual y visibilidad solo para administradores autenticados",
       "Gestión avanzada de stock con edición/eliminación de combinaciones desde el popup de edición",
       "Carga de imágenes comprimidas a WebP y redimensionadas automáticamente",
       "Interfaz segura: botones de administración visibles solo para usuarios autenticados (JWT en localStorage)",
-      "Experiencia mejorada: auto‑scroll a la última categoría creada, lazy load de imágenes, animaciones AOS"
+      "Experiencia mejorada: auto-scroll a la última categoría creada, lazy load de imágenes, animaciones AOS"
     ],
     en: [
-      "Manage items: create, edit, delete and mark sub‑items (portions, extras, etc.)",
-      "Organise groups and categories with drag‑and‑drop, persisting the order in the database",
+      "Manage items: create, edit, delete and mark sub-items (portions, extras, etc.)",
+      "Organise groups and categories with drag-and-drop, persisting the order in the database",
       "Show/hide items with visual feedback and visibility only for authenticated admins",
       "Advanced stock management: edit/remove combinations directly in the edit popup",
       "Upload images automatically compressed to WebP and resized",
       "Secure interface: admin buttons visible only to authenticated users (JWT in localStorage)",
-      "Enhanced UX: auto‑scroll to the last created category, lazy loading of images, AOS animations"
+      "Enhanced UX: auto-scroll to the last created category, lazy loading of images, AOS animations"
     ],
+  },
+  note: {
+    es: "Diseñada para uso en móviles (sin versión responsiva para escritorio).",
+    en: "Designed for mobile use (no responsive desktop version)."
   },
   url: "https://elpatio427.com.ar/"
 }
+
 ,{
   name: {
     es: "Generador de Gif Card",
@@ -557,6 +568,10 @@ visitOptions: [
       "Public page with QR and WhatsApp shortcut",
       "Validation/redeem with active or expired status"
     ],
+  },
+    note: {
+    es: "Diseñada para uso en móviles (sin versión responsiva para escritorio).",
+    en: "Designed for mobile use (no responsive desktop version)."
   },
   url: "https://octopus-app.com.ar/gif-card/",
 },
@@ -747,6 +762,8 @@ document.addEventListener("keydown", (e) => {
       <h4>${translations[lang].techTitle}</h4>
       <p>${p.stack.join(", ")}</p>
       <ul>${p.features[lang].map((f) => `<li>${f}</li>`).join("")}</ul>
+      ${p.note ? `<p style="font-size:.85rem; color:#bbb;"><em>${p.note[lang]}</em></p>` : ""}
+
      
     `);
   }
